@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>紐西蘭南島露營車之旅 🚐</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #4A90D9;
+    --sky-light: #E8F1FB;
+    --forest: #2D6A4F;
+    --forest-light: #D8F3DC;
+    --earth: #B07D3B;
+    --earth-light: #FFF3E0;
+    --peak: #F5F5F5;
+    --text: #2C3E50;
+    --text-light: #5D6D7E;
+    --danger: #E74C3C;
+    --danger-light: #FDEDEC;
+    --white: #FFFFFF;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--peak);
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ====== HERO ====== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(160deg, #1a3a5c 0%, #2D6A4F 40%, #4A90D9 100%);
+    overflow: hidden;
+    padding: 40px 20px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+  .hero-emoji {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 24px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    color: var(--white);
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 3vw, 24px);
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .hero-tag {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .scroll-hint {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* ====== NAV ====== */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 0 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sticky-nav::-webkit-scrollbar { height: 0; }
+
+  .nav-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 4px;
+    padding: 8px 0;
+    white-space: nowrap;
+  }
+
+  .nav-inner a {
+    text-decoration: none;
+    color: var(--text-light);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .nav-inner a:hover, .nav-inner a:active {
+    background: var(--sky-light);
+    color: var(--sky);
+  }
+
+  /* ====== SECTIONS ====== */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .section-desc {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  /* ====== OVERVIEW CARDS ====== */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .overview-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .overview-card:hover { transform: translateY(-2px); }
+
+  .overview-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+  .overview-label { font-size: 14px; color: var(--text-light); margin-bottom: 4px; }
+  .overview-value { font-size: 22px; font-weight: 700; color: var(--text); }
+
+  /* ====== ITINERARY ====== */
+  .week-label {
+    display: inline-block;
+    background: var(--sky);
+    color: var(--white);
+    padding: 6px 20px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+
+  .day-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--sky);
+    transition: transform 0.15s;
+  }
+
+  .day-card:hover { transform: translateX(4px); }
+
+  .day-card.highlight { border-left-color: var(--earth); background: linear-gradient(135deg, var(--white), var(--earth-light)); }
+  .day-card.nature { border-left-color: var(--forest); }
+  .day-card.rest { border-left-color: #9B59B6; }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .day-num {
+    background: var(--sky);
+    color: var(--white);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .day-card.highlight .day-num { background: var(--earth); }
+  .day-card.nature .day-num { background: var(--forest); }
+  .day-card.rest .day-num { background: #9B59B6; }
+
+  .day-title { font-size: 22px; font-weight: 700; }
+  .day-date { font-size: 14px; color: var(--text-light); }
+
+  .day-body { padding-left: 60px; }
+  @media (max-width: 600px) { .day-body { padding-left: 0; } }
+
+  .day-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .day-detail-icon { flex-shrink: 0; width: 24px; text-align: center; }
+
+  .day-tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 8px;
+    margin-right: 6px;
+  }
+
+  .tag-drive { background: #EBF5FB; color: #2980B9; }
+  .tag-camp { background: #E8F8F5; color: #1ABC9C; }
+  .tag-activity { background: #FEF9E7; color: #F39C12; }
+
+  /* ====== BUDGET ====== */
+  .budget-table {
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+
+  .budget-table th {
+    background: var(--sky);
+    color: var(--white);
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .budget-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 17px;
+  }
+
+  .budget-table tr:last-child td { border-bottom: none; }
+
+  .budget-table tr:hover td { background: var(--sky-light); }
+
+  .budget-table .total-row td {
+    background: var(--forest-light);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--forest);
+  }
+
+  .budget-note {
+    background: var(--earth-light);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    font-size: 16px;
+    color: var(--earth);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  /* ====== TIPS ====== */
+  .tip-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .tip-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tip-body { font-size: 17px; line-height: 1.9; color: var(--text); }
+  .tip-body li { margin-bottom: 8px; }
+
+  .warning-card {
+    background: var(--danger-light);
+    border: 2px solid var(--danger);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .warning-card .tip-title { color: var(--danger); }
+
+  /* ====== CAMP LIST ====== */
+  .camp-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .camp-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--forest);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .camp-info { flex: 1; min-width: 200px; }
+  .camp-name { font-weight: 700; font-size: 17px; }
+  .camp-location { font-size: 14px; color: var(--text-light); }
+
+  .camp-price {
+    font-weight: 700;
+    color: var(--forest);
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  /* ====== CHECKLIST ====== */
+  .check-group { margin-bottom: 28px; }
+  .check-group-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--sky-light);
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #CCC;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: transparent;
+  }
+
+  .check-box.checked {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--white);
+  }
+
+  /* ====== REFERENCE ====== */
+  .ref-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+
+  .ref-card a {
+    color: var(--sky);
+    text-decoration: none;
+    font-weight: 500;
+    word-break: break-all;
+  }
+
+  .ref-card a:hover { text-decoration: underline; }
+  .ref-label { font-size: 14px; color: var(--text-light); margin-bottom: 4px; }
+
+  /* ====== FOOTER ====== */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+    font-size: 14px;
+    background: var(--white);
+    margin-top: 40px;
+  }
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 600px) {
+    .hero-emoji { font-size: 56px; }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .budget-table th, .budget-table td { padding: 10px 12px; font-size: 15px; }
+    .camp-item { flex-direction: column; align-items: flex-start; }
+    section { padding: 40px 0; }
+    .day-body { padding-left: 0; margin-top: 8px; }
+    .day-card { padding: 20px; }
+  }
+
+  /* print */
+  @media print {
+    .sticky-nav, .scroll-hint { display: none; }
+    .hero { min-height: auto; padding: 40px 20px; }
+    .day-card, .tip-card, .camp-item { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-emoji">🚐</span>
+    <h1>紐西蘭南島<br>露營車之旅</h1>
+    <p class="hero-sub">2027年5月 ・ 20天 ・ 8人同行</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🏔️ 南島深度遊</span>
+      <span class="hero-tag">🍂 最美秋色</span>
+      <span class="hero-tag">🚐 2台露營車</span>
+      <span class="hero-tag">👨‍👩‍👧‍👦 全家出遊</span>
+    </div>
+    <p class="scroll-hint">▼ 往下滑看完整行程 ▼</p>
+  </div>
+</section>
+
+<!-- ============ NAV ============ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#overview">📋 總覽</a>
+    <a href="#itinerary">🗓️ 每日行程</a>
+    <a href="#budget">💰 預算</a>
+    <a href="#camps">🏕️ 營地</a>
+    <a href="#tips">⚠️ 注意事項</a>
+    <a href="#checklist">✅ 行前清單</a>
+    <a href="#ref">📎 參考資料</a>
+  </div>
+</nav>
+
+<!-- ============ OVERVIEW ============ -->
+<section id="overview">
+  <div class="container">
+    <h2 class="section-title">📋 旅程總覽</h2>
+    <p class="section-desc">從基督城出發，環繞南島一圈，飽覽湖光山色、峽灣冰川、星空與秋葉。</p>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <span class="overview-icon">📅</span>
+        <div class="overview-label">旅行天數</div>
+        <div class="overview-value">20天</div>
+      </div>
+      <div class="overview-card">
+        <span class="overview-icon">🗓️</span>
+        <div class="overview-label">出發日期</div>
+        <div class="overview-value">2027/5/1</div>
+      </div>
+      <div class="overview-card">
+        <span class="overview-icon">👥</span>
+        <div class="overview-label">旅行人數</div>
+        <div class="overview-value">8人</div>
+      </div>
+      <div class="overview-card">
+        <span class="overview-icon">🚐</span>
+        <div class="overview-label">露營車</div>
+        <div class="overview-value">2台</div>
+      </div>
+      <div class="overview-card">
+        <span class="overview-icon">🌡️</span>
+        <div class="overview-label">氣溫（5月）</div>
+        <div class="overview-value">0～15°C</div>
+      </div>
+      <div class="overview-card">
+        <span class="overview-icon">💰</span>
+        <div class="overview-label">每人預算</div>
+        <div class="overview-value">≈ 5.8萬</div>
+      </div>
+    </div>
+
+    <div class="budget-note">
+      💡 <strong>5月是紐西蘭的秋天</strong>，白天涼爽約10-15°C，早晚接近0°C。箭鎮、瓦納卡的秋葉金黃燦爛，是攝影最美的季節。人潮少、營地好訂、價格也比夏季便宜。
+    </div>
+  </div>
+</section>
+
+<!-- ============ ITINERARY ============ -->
+<section id="itinerary" style="background: var(--sky-light); padding-bottom: 80px;">
+  <div class="container">
+    <h2 class="section-title">🗓️ 每日行程</h2>
+    <p class="section-desc">每天開車不超過3小時，行程寬鬆不趕路，適合長輩同行。</p>
+
+    <!-- WEEK 1 -->
+    <div class="week-label">第一週：東海岸線</div>
+
+    <div class="day-card rest">
+      <div class="day-header">
+        <div class="day-num">1</div>
+        <div>
+          <div class="day-title">抵達基督城</div>
+          <div class="day-date">5/1（六）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">✈️</span> 下午抵達基督城機場，取露營車、熟悉車輛操作</div>
+        <div class="day-detail"><span class="day-detail-icon">🛒</span> 前往 Pak'nSave 超市大採購（食材、日用品）</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Meadow Park Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+        <span class="tag-activity day-tag">⭐ 今天好好休息</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">2</div>
+        <div>
+          <div class="day-title">基督城市區觀光</div>
+          <div class="day-date">5/2（日）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🏛️</span> 基督城植物園、坎特伯雷博物館、復古電車</div>
+        <div class="day-detail"><span class="day-detail-icon">🍽️</span> 市區午餐，感受這座花園城市</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 市區移動</span>
+      </div>
+    </div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">3</div>
+        <div>
+          <div class="day-title">基督城 → 凱庫拉</div>
+          <div class="day-date">5/3（一）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 沿1號公路北上，沿途壯觀海岸風光</div>
+        <div class="day-detail"><span class="day-detail-icon">🦭</span> 下午抵達凱庫拉，海邊散步看野生海豹</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Kaikoura Top 10 Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 2.5小時（180km）</span>
+      </div>
+    </div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">4</div>
+        <div>
+          <div class="day-title">凱庫拉海岸散步 🦭</div>
+          <div class="day-date">5/4（二）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🦭</span> 免費！Kaikoura Peninsula Walkway 看野生海豹群</div>
+        <div class="day-detail"><span class="day-detail-icon">🌊</span> 海邊步道散步，運氣好可看到野生海豚</div>
+        <div class="day-detail"><span class="day-detail-icon">🍽️</span> 超市買海鮮自己煮，省錢又新鮮</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+        <span class="tag-activity day-tag">🆓 免費景點</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">5</div>
+        <div>
+          <div class="day-title">凱庫拉 → 漢默溫泉 ♨️</div>
+          <div class="day-date">5/5（三）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">♨️</span> 前往漢默溫泉小鎮，泡露天溫泉放鬆身心</div>
+        <div class="day-detail"><span class="day-detail-icon">🌲</span> Hanmer Springs Thermal Pools — 長輩最愛！</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Hanmer Springs Top 10</div>
+        <span class="tag-drive day-tag">🚗 2小時（130km）</span>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-header">
+        <div class="day-num">6</div>
+        <div>
+          <div class="day-title">漢默溫泉休息日</div>
+          <div class="day-date">5/6（四）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">😌</span> 睡到自然醒，小鎮悠閒散步</div>
+        <div class="day-detail"><span class="day-detail-icon">☕</span> 找家咖啡廳坐坐，看森林風景</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+        <span class="tag-activity day-tag">😌 休息日</span>
+      </div>
+    </div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">7</div>
+        <div>
+          <div class="day-title">漢默溫泉 → 特卡波湖</div>
+          <div class="day-date">5/7（五）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 回基督城後轉往內陸，沿途壯闊山景</div>
+        <div class="day-detail"><span class="day-detail-icon">💎</span> 抵達夢幻蒂卡波湖 — 牛奶藍色湖水</div>
+        <div class="day-detail"><span class="day-detail-icon">⛪</span> 好牧羊人教堂、湖邊散步</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Lake Tekapo Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 4小時（340km）</span>
+        <span class="tag-activity day-tag">⚠️ 今天車程較長，中途休息</span>
+      </div>
+    </div>
+
+    <!-- WEEK 2 -->
+    <div class="week-label" style="margin-top: 40px;">第二週：湖光山色</div>
+
+    <div class="day-card highlight">
+      <div class="day-header">
+        <div class="day-num">8</div>
+        <div>
+          <div class="day-title">特卡波湖觀星 ⭐</div>
+          <div class="day-date">5/8（六）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🌿</span> 白天湖邊散步、好牧羊人教堂拍照</div>
+        <div class="day-detail"><span class="day-detail-icon">⭐</span> 晚上免費觀星 — 走出營地就能看到銀河！不用報團</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+        <span class="tag-activity day-tag">⭐ 此行必看亮點</span>
+      </div>
+    </div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">9</div>
+        <div>
+          <div class="day-title">庫克山一日遊 🏔️</div>
+          <div class="day-date">5/9（日）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🏔️</span> 前往庫克山國家公園，紐西蘭最高峰</div>
+        <div class="day-detail"><span class="day-detail-icon">🥾</span> Hooker Valley Track 步道（平坦好走，3小時來回）</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：回特卡波湖</div>
+        <span class="tag-drive day-tag">🚗 來回1.5小時（130km）</span>
+        <span class="tag-activity day-tag">⭐ 必玩體驗</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">10</div>
+        <div>
+          <div class="day-title">特卡波湖 → 瓦納卡</div>
+          <div class="day-date">5/10（一）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 經8號公路穿越 Lindis Pass，壯闊高山草原</div>
+        <div class="day-detail"><span class="day-detail-icon">🍂</span> 抵達瓦納卡，秋色絕美湖畔小鎮</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Wanaka Lakeview Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 3小時（210km）</span>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-header">
+        <div class="day-num">11</div>
+        <div>
+          <div class="day-title">瓦納卡休息日 🍂</div>
+          <div class="day-date">5/11（二）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🍂</span> 瓦納卡湖邊散步，拍金黃秋葉美景</div>
+        <div class="day-detail"><span class="day-detail-icon">📸</span> 著名的「湖中孤樹」拍照打卡</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+        <span class="tag-activity day-tag">😌 休息日</span>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-header">
+        <div class="day-num">12</div>
+        <div>
+          <div class="day-title">瓦納卡自由日</div>
+          <div class="day-date">5/12（三）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🎯</span> Puzzling World 趣味迷宮（大人小孩都愛）</div>
+        <div class="day-detail"><span class="day-detail-icon">☕</span> 湖邊咖啡廳悠閒時光</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+      </div>
+    </div>
+
+    <div class="day-card highlight">
+      <div class="day-header">
+        <div class="day-num">13</div>
+        <div>
+          <div class="day-title">瓦納卡 → 箭鎮 → 皇后鎮</div>
+          <div class="day-date">5/13（四）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🍂</span> 箭鎮 — 紐西蘭最美秋色小鎮！金黃楓葉超夢幻</div>
+        <div class="day-detail"><span class="day-detail-icon">⛏️</span> 體驗淘金，漫步復古老街</div>
+        <div class="day-detail"><span class="day-detail-icon">🏙️</span> 下午抵達皇后鎮</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Queenstown Lakeview Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 1.5小時（70km）</span>
+        <span class="tag-activity day-tag">⭐ 秋色最美</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">14</div>
+        <div>
+          <div class="day-title">皇后鎮市區觀光</div>
+          <div class="day-date">5/14（五）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🏞️</span> 皇后鎮花園散步，免費湖景超美</div>
+        <div class="day-detail"><span class="day-detail-icon">🍔</span> 逛逛市區、湖邊野餐</div>
+        <div class="day-detail"><span class="day-detail-icon">📸</span> Wakatipu 湖畔步道拍照</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 不用開車</span>
+      </div>
+    </div>
+
+    <!-- WEEK 3 -->
+    <div class="week-label" style="margin-top: 40px;">第三週：峽灣與返程</div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">15</div>
+        <div>
+          <div class="day-title">格林諾奇一日遊</div>
+          <div class="day-date">5/15（六）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🧙</span> 魔戒電影場景！Paradise 小鎮</div>
+        <div class="day-detail"><span class="day-detail-icon">🏞️</span> 沿途湖光山色，被譽為最美公路之一</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：同上</div>
+        <span class="tag-drive day-tag">🚗 來回1.5小時（90km）</span>
+      </div>
+    </div>
+
+    <div class="day-card highlight">
+      <div class="day-header">
+        <div class="day-num">16</div>
+        <div>
+          <div class="day-title">米佛峽灣公路之旅 🏔️</div>
+          <div class="day-date">5/16（日）⭐ 全程最大亮點</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 免費！94號公路本身就是世界級景觀道路</div>
+        <div class="day-detail"><span class="day-detail-icon">🏔️</span> 沿途免費觀景台：鏡湖、荷馬隧道、The Chasm 步道</div>
+        <div class="day-detail"><span class="day-detail-icon">📸</span> 到峽灣停車場免費觀景拍照，不搭遊船一樣壯觀</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Te Anau Lakeview Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 來回5-6小時（240km）</span>
+        <span class="tag-activity day-tag">🆓 免費自駕觀景</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">17</div>
+        <div>
+          <div class="day-title">蒂阿瑙 → 但尼丁</div>
+          <div class="day-date">5/17（一）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 經內陸路線前往蘇格蘭風情城市</div>
+        <div class="day-detail"><span class="day-detail-icon">🏰</span> 但尼丁火車站 — 紐西蘭最美建築</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Dunedin Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 3小時（290km）</span>
+      </div>
+    </div>
+
+    <div class="day-card nature">
+      <div class="day-header">
+        <div class="day-num">18</div>
+        <div>
+          <div class="day-title">但尼丁觀光 🏰</div>
+          <div class="day-date">5/18（二）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🏰</span> 但尼丁火車站 — 免費參觀紐西蘭最美建築</div>
+        <div class="day-detail"><span class="day-detail-icon">🏘️</span> Baldwin Street 世界最陡街道（免費拍照）</div>
+        <div class="day-detail"><span class="day-detail-icon">🌊</span> 奧塔哥半島免費觀景步道</div>
+        <div class="day-detail"><span class="day-detail-icon">🪨</span> 途經摩拉基大圓石（免費！海邊奇景）</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：Oamaru Top 10 Holiday Park</div>
+        <span class="tag-drive day-tag">🚗 1.5小時（115km）</span>
+        <span class="tag-activity day-tag">🆓 全部免費</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num">19</div>
+        <div>
+          <div class="day-title">奧瑪魯 → 基督城</div>
+          <div class="day-date">5/19（三）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">🛣️</span> 沿1號公路北返基督城</div>
+        <div class="day-detail"><span class="day-detail-icon">🧹</span> 清理露營車、加滿油、還車準備</div>
+        <div class="day-detail"><span class="day-detail-icon">🛒</span> 最後採購伴手禮</div>
+        <div class="day-detail"><span class="day-detail-icon">🏕️</span> 住宿：機場附近飯店</div>
+        <span class="tag-drive day-tag">🚗 3.5小時（340km）</span>
+      </div>
+    </div>
+
+    <div class="day-card rest">
+      <div class="day-header">
+        <div class="day-num">20</div>
+        <div>
+          <div class="day-title">離開紐西蘭 ✈️</div>
+          <div class="day-date">5/20（四）</div>
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="day-detail"><span class="day-detail-icon">✈️</span> 搭機返回台灣，帶著滿滿回憶回家</div>
+        <span class="tag-activity day-tag">🏠 回家囉！</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BUDGET ============ -->
+<section id="budget">
+  <div class="container">
+    <h2 class="section-title">💰 費用預算</h2>
+    <p class="section-desc">以8人、2台露營車、20天估算。匯率以 1 NZD ≈ 19 TWD 計算。</p>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th>紐幣 (NZD)</th>
+          <th>台幣 (TWD)</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>✈️ 來回機票</td>
+          <td>—</td>
+          <td>25,000/人</td>
+          <td>台灣↔基督城（含轉機）</td>
+        </tr>
+        <tr>
+          <td>🚐 露營車租金</td>
+          <td>$4,400</td>
+          <td>83,600</td>
+          <td>2台 × 20天 × $110/天（Britz/Eurocampers中等品牌）</td>
+        </tr>
+        <tr>
+          <td>🛡️ 全險保險</td>
+          <td>$2,400</td>
+          <td>45,600</td>
+          <td>2台 × 20天 × $60/天（最完整方案）</td>
+        </tr>
+        <tr>
+          <td>🏕️ 營地費</td>
+          <td>$2,100</td>
+          <td>39,900</td>
+          <td>約$55/車/晚 × 2台 × 19晚</td>
+        </tr>
+        <tr>
+          <td>⛽ 油費</td>
+          <td>$900</td>
+          <td>17,100</td>
+          <td>約3,000公里 × 2台</td>
+        </tr>
+        <tr>
+          <td>🍽️ 餐飲</td>
+          <td>$3,200</td>
+          <td>60,800</td>
+          <td>以自煮為主，$20/人/天</td>
+        </tr>
+        <tr>
+          <td>🎟️ 活動門票</td>
+          <td>$0</td>
+          <td>0</td>
+          <td>全部安排免費景點與步道！</td>
+        </tr>
+        <tr>
+          <td>📱 其他雜費</td>
+          <td>$800</td>
+          <td>15,200</td>
+          <td>SIM卡、伴手禮、備用金</td>
+        </tr>
+        <tr class="total-row">
+          <td>📊 總計（8人）</td>
+          <td>—</td>
+          <td>≈ 261,200</td>
+          <td>不含機票</td>
+        </tr>
+        <tr class="total-row">
+          <td>👤 每人平均</td>
+          <td>—</td>
+          <td>≈ 57,650</td>
+          <td>含機票 25,000 + 分攤 32,650</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="budget-note">
+      💡 <strong>省錢秘訣：</strong>以自煮為主可以省非常多餐費！紐西蘭外食很貴（一餐約 NZD 20-30），但超市食材便宜。8人一起買大包裝分攤最划算。推薦超市：Pak'nSave（最便宜）、Countdown。
+    </div>
+
+    <div class="budget-note">
+      💡 <strong>折衷選擇 Britz / Eurocampers：</strong>車況比最便宜的 Jucy 好很多，車齡較新、設備齊全、床墊舒適，適合長輩長天數旅行。價格約 Maui 的六折，是性價比最好的選擇。也可上 Motorhome Republic 比價，同款車不同平台價格可能差一截。
+    </div>
+
+    <div class="budget-note" style="background: var(--forest-light); color: var(--forest);">
+      🆓 <strong>免費活動超多！</strong>紐西蘭最美的風景都是免費的：湖邊步道、海豹棲息地、摩拉基大圓石、箭鎮老街、好牧羊人教堂、特卡波觀星（走出營地就能看銀河）、米佛峽灣94號公路沿途觀景台。不花錢也能玩得很盡興！
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAMPS ============ -->
+<section id="camps" style="background: var(--forest-light);">
+  <div class="container">
+    <h2 class="section-title">🏕️ 推薦營地</h2>
+    <p class="section-desc">以 Top 10 Holiday Park 連鎖品牌為主，設施完善、有廚房浴室、適合長輩。</p>
+
+    <div class="camp-item">
+      <div class="camp-num">1</div>
+      <div class="camp-info">
+        <div class="camp-name">Meadow Park Holiday Park</div>
+        <div class="camp-location">📍 基督城</div>
+      </div>
+      <div class="camp-price">~NZD $55/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">2</div>
+      <div class="camp-info">
+        <div class="camp-name">Kaikoura Top 10 Holiday Park</div>
+        <div class="camp-location">📍 凱庫拉</div>
+      </div>
+      <div class="camp-price">~NZD $55/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">3</div>
+      <div class="camp-info">
+        <div class="camp-name">Hanmer Springs Top 10</div>
+        <div class="camp-location">📍 漢默溫泉</div>
+      </div>
+      <div class="camp-price">~NZD $60/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">4</div>
+      <div class="camp-info">
+        <div class="camp-name">Lake Tekapo Holiday Park ⭐</div>
+        <div class="camp-location">📍 特卡波湖（熱門！需提前訂）</div>
+      </div>
+      <div class="camp-price">~NZD $60/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">5</div>
+      <div class="camp-info">
+        <div class="camp-name">Wanaka Lakeview Holiday Park ⭐</div>
+        <div class="camp-location">📍 瓦納卡（熱門！需提前訂）</div>
+      </div>
+      <div class="camp-price">~NZD $65/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">6</div>
+      <div class="camp-info">
+        <div class="camp-name">Queenstown Lakeview Holiday Park ⭐</div>
+        <div class="camp-location">📍 皇后鎮（熱門！需提前訂）</div>
+      </div>
+      <div class="camp-price">~NZD $70/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">7</div>
+      <div class="camp-info">
+        <div class="camp-name">Te Anau Lakeview Holiday Park</div>
+        <div class="camp-location">📍 蒂阿瑙</div>
+      </div>
+      <div class="camp-price">~NZD $55/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">8</div>
+      <div class="camp-info">
+        <div class="camp-name">Dunedin Holiday Park</div>
+        <div class="camp-location">📍 但尼丁</div>
+      </div>
+      <div class="camp-price">~NZD $50/車</div>
+    </div>
+    <div class="camp-item">
+      <div class="camp-num">9</div>
+      <div class="camp-info">
+        <div class="camp-name">Oamaru Top 10 Holiday Park</div>
+        <div class="camp-location">📍 奧瑪魯</div>
+      </div>
+      <div class="camp-price">~NZD $55/車</div>
+    </div>
+
+    <div class="budget-note" style="margin-top: 24px;">
+      💡 <strong>Top 10 會員卡</strong>約 NZD $50（兩年有效），住越多晚折扣越多，8人團很快就回本！建議入會。
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIPS ============ -->
+<section id="tips">
+  <div class="container">
+    <h2 class="section-title">⚠️ 重要注意事項</h2>
+    <p class="section-desc">第一次在紐西蘭開露營車？這些事情一定要知道！</p>
+
+    <div class="warning-card">
+      <div class="tip-title">🚨 最重要：紐西蘭是「右駕左行」</div>
+      <div class="tip-body">
+        跟台灣完全相反！駕駛座在車子右邊，車要靠左邊開。方向燈和雨刷桿也是相反的。建議取車第一天不要趕路，先在市區慢慢適應。如果有日本自駕經驗會比較好上手。
+      </div>
+    </div>
+
+    <div class="tip-card" style="border-left: 5px solid var(--earth);">
+      <div class="tip-title">🚐 露營車怎麼選？（很重要！）</div>
+      <div class="tip-body">
+        <p style="margin-bottom: 12px;">我們8人分2台車，每台睡4人。<strong>建議租2台「6人座」車型</strong>，不要租剛好4人座的，原因如下：</p>
+        <ul>
+          <li><strong>空間差很多：</strong>6人座有3張床，4人只用2張，多出來的床位可以放行李和雜物，車內活動空間充裕許多</li>
+          <li><strong>長輩睡下層：</strong>上層床鋪通常要爬梯子，留給年輕人睡。6人座才有足夠的下層空間讓長輩舒適入睡</li>
+          <li><strong>站立高度：</strong>6人座車型通常車高足夠在車內站立，不用一直彎腰，20天下來差很多</li>
+          <li><strong>衛浴較大：</strong>6人座 Self-contained 車型的廁所浴室比4人座稍大，長輩使用更方便</li>
+          <li><strong>行李空間：</strong>8人的行李很多，4人座塞4人加行李會非常擁擠，每天收拾很痛苦</li>
+        </ul>
+        <p style="margin-top: 12px; padding: 12px 16px; background: var(--earth-light); border-radius: 10px;">
+          ✅ <strong>推薦車型：</strong>Britz 或 Eurocampers 的 6 Berth（6人座），有衛浴廚房（Self-contained），確保營地選擇不受限。取車時記得選<strong>有供電車位</strong>的營地，5月夜晚很冷，暖氣是必需品！
+        </p>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">📋 駕照準備</div>
+      <div class="tip-body">
+        <ul>
+          <li><strong>出發前</strong>到監理所辦理「國際駕照」（約台幣250元）</li>
+          <li>取車時要帶<strong>國際駕照 + 台灣駕照正本</strong>，兩個都要！</li>
+          <li>所有會開車的人都要辦國際駕照，並在取車時登記為駕駛人</li>
+          <li>建議至少安排<strong>2位駕駛</strong>輪流開車，長途比較安全</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🛡️ 保險一定要保全險</div>
+      <div class="tip-body">
+        <ul>
+          <li>紐西蘭修車費非常貴，強烈建議買「全險」（降低自付額）</li>
+          <li>全險約 NZD $55-60/天，已選最完整方案，出事故免自付額最安心</li>
+          <li>很多路段是碎石子路，車子容易被小石頭打到</li>
+          <li>有些全險還附贈實用配件（桌椅、雪鏈等）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🚗 開車注意事項</div>
+      <div class="tip-body">
+        <ul>
+          <li><strong>速限：</strong>4-6人座大型露營車最高時速 90km/h，超速罰很重！</li>
+          <li><strong>讓車：</strong>開慢車後面有車跟的話，請找安全處靠邊讓人先走（重要禮儀）</li>
+          <li><strong>圓環：</strong>紐西蘭很多圓環取代紅綠燈，圓環內車輛優先</li>
+          <li><strong>單線道：</strong>郊區多為雙向單線道，會車要小心</li>
+          <li><strong>不要疲勞駕駛：</strong>每2小時休息一次，開長輩同行更要注意</li>
+          <li><strong>下載 Waze 導航：</strong>有測速照相提醒功能</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warning-card">
+      <div class="tip-title">🚐 露營車不能隨便停過夜！</div>
+      <div class="tip-body">
+        紐西蘭法律規定露營車<strong>不能隨便路邊停車過夜</strong>，必須停在合法營地。很多停車場和觀景台都明確寫著「不接受露營車過夜」。違規會被罰款！請務必每天提前規劃好住宿營地。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🔌 露營車用電須知</div>
+      <div class="tip-body">
+        <ul>
+          <li>露營車有兩套電力系統：行車電源（開車時自動充電）和廚衛電源（需外接電力）</li>
+          <li><strong>訂營地時記得選「有供電車位」</strong>，才能插電用暖氣、充電</li>
+          <li>不接電時避免使用微波爐等大功率電器，冰箱可以正常運作</li>
+          <li>5月夜晚很冷，<strong>暖氣非常重要</strong>，務必確認營地有供電</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">📱 實用 APP 下載</div>
+      <div class="tip-body">
+        <ul>
+          <li><strong>thl Roadtrip</strong> — 找露營車可停的點、超市、加油站（最推薦！）</li>
+          <li><strong>CamperMate</strong> — 營地、景點、廁所位置查詢</li>
+          <li><strong>Rankers Camping NZ</strong> — 營地評價比較</li>
+          <li><strong>Waze</strong> — 導航兼測速提醒</li>
+          <li><strong>Gas Spy</strong> — 比價加油站找便宜油價</li>
+          <li>出發前記得<strong>下載離線地圖</strong>，郊區常常沒有網路訊號</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🌡️ 5月天氣與穿著</div>
+      <div class="tip-body">
+        <ul>
+          <li>白天 10-15°C，早晚可能接近 0°C</li>
+          <li>高山地區可能下雪（庫克山、米佛峽灣路段要注意）</li>
+          <li><strong>洋蔥式穿法：</strong>保暖內衣 + 刷毛外套 + 防水防風外套</li>
+          <li>必備：羽絨外套、毛帽、手套、圍巾、暖暖包</li>
+          <li>紐西蘭陽光非常強，即使陰天也要擦防曬</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🛒 超市與生活</div>
+      <div class="tip-body">
+        <ul>
+          <li><strong>Pak'nSave</strong> 最便宜，<strong>Countdown</strong> 最普遍</li>
+          <li>取車後第一件事去超市大採買，露營車有冰箱可以放</li>
+          <li>自己煮每餐大約 NZD 5-8/人，外食要 NZD 20-30</li>
+          <li>紐西蘭的牛奶、奶油、牛羊肉、奇異果都很便宜又好吃</li>
+          <li>建議帶電熱水壺、亞洲調味料（營地通常有完整廚房可用）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-title">🌐 網路與通訊</div>
+      <div class="tip-body">
+        <ul>
+          <li>在機場的 <strong>Vodafone</strong> 櫃台買 SIM 卡最方便</li>
+          <li>3G 方案約台幣 1,300，8G 約台幣 2,500</li>
+          <li>郊區和山區<strong>經常沒有網路訊號</strong>，出發前先下載離線地圖</li>
+          <li>營地通常有 WiFi，但速度很慢，別指望看影片</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="checklist" style="background: var(--earth-light);">
+  <div class="container">
+    <h2 class="section-title">✅ 行前準備清單</h2>
+    <p class="section-desc">點擊方框可以打勾，方便追蹤準備進度。</p>
+
+    <div class="tip-card">
+      <div class="check-group">
+        <div class="check-group-title">📄 3 個月前</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 訂機票（台灣↔基督城）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 預訂露營車（比較 Britz / Eurocampers，選全險方案）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 規劃路線、預訂熱門營地</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 研究免費景點與步道路線</div>
+      </div>
+
+      <div class="check-group">
+        <div class="check-group-title">📄 1 個月前</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 辦理國際駕照（所有會開車的人都要辦！）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 申請 NZeTA 紐西蘭電子旅行許可</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 購買旅遊保險</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 下載所有 APP（地圖、營地、導航）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 下載紐西蘭離線地圖</div>
+      </div>
+
+      <div class="check-group">
+        <div class="check-group-title">📄 1 週前</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 確認所有預訂（機票、車、營地、活動）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 檢查護照效期（需6個月以上）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 通知信用卡公司出國（避免被鎖卡）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 換少量紐幣現金（約 NZD 200）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 打包行李（保暖衣物最重要！）</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 列印所有確認單</div>
+      </div>
+
+      <div class="check-group">
+        <div class="check-group-title">📄 出發當天隨身攜帶</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 護照</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 國際駕照 + 台灣駕照正本</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> NZeTA 電子許可截圖</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 信用卡</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 露營車預訂確認單</div>
+        <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')">✓</div> 保暖外套（飛機上也冷）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section id="ref">
+  <div class="container">
+    <h2 class="section-title">📎 參考資料與實用連結</h2>
+    <p class="section-desc">這些部落格和影片都有很詳細的經驗分享，出發前可以看看。</p>
+
+    <div class="ref-card">
+      <div class="ref-label">📝 露營車完整攻略（中文）</div>
+      <a href="https://lillian.tw/campervan/" target="_blank">莉莉嗯｜2025紐西蘭露營車攻略</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">📝 親子露營車遊記</div>
+      <a href="https://rvgorv.pixnet.net/blog/post/347609989" target="_blank">房車國度｜紐西蘭露營車親子遊全攻略</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">📝 露營車指南（英文）</div>
+      <a href="https://gowithmarkhazyl.com/campervanning-in-new-zealand/" target="_blank">Go With Mark Hazyl｜Campervanning in NZ</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">📝 露營車推薦（中文）</div>
+      <a href="https://taiwan-camping.org/%E7%B4%90%E8%A5%BF%E8%98%AD%E9%9C%B2%E7%87%9F%E8%BB%8A%E6%8E%A8%E8%96%A6/" target="_blank">台灣露營組織｜紐西蘭露營車推薦</a>
+    </div>
+
+    <div style="margin-top: 24px;"></div>
+
+    <div class="ref-card">
+      <div class="ref-label">🎬 自駕影片教學</div>
+      <a href="https://www.youtube.com/watch?v=2Z_2t9ExkUo&list=PLOytBejqn73o3iDvd02gC_hPMzGxU81NA" target="_blank">YouTube 播放清單 1</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">🎬 露營車旅遊 Vlog</div>
+      <a href="https://www.youtube.com/watch?v=1psp_I6dlT8&list=PLxL9G9rpJBSxcZV-2isZalTnqboSrQWsZ" target="_blank">YouTube 播放清單 2</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">🎬 紐西蘭露營車體驗</div>
+      <a href="https://www.youtube.com/watch?v=37TLPeHEb3E" target="_blank">YouTube 影片 3</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-label">🎬 實用自駕教學</div>
+      <a href="https://www.youtube.com/watch?v=JPRRnAFhDfU" target="_blank">YouTube 影片 4</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <p>🚐 紐西蘭南島露營車之旅 2027</p>
+  <p style="margin-top: 8px;">用心規劃，開心出發！</p>
+</footer>
+
+</body>
+</html>
